@@ -1,0 +1,19 @@
+{
+    "name": "l-cong/ldap",
+    "description": "Ldap Connection",
+    "autoload": {
+        "psr-4": {
+            "LCong\\Ldap\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "l-cong",
+            "email": "l-cong@plott.co.jp"
+        }
+    ],
+    "require":
+    {
+        "directorytree/ldaprecord-laravel": "^2.6"
+    }
+}
