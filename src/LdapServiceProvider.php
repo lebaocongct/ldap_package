@@ -20,10 +20,6 @@ class LdapServiceProvider extends ServiceProvider
     }
     public function register()
     {
-<<<<<<< HEAD
-        dd('a');
-=======
-
->>>>>>> 24dd5df (Initial commit)
+        dd('addas');
     }
 }
