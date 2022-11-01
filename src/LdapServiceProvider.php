@@ -20,6 +20,6 @@ class LdapServiceProvider extends ServiceProvider
     }
     public function register()
     {
-        dd('addas');
+
     }
 }

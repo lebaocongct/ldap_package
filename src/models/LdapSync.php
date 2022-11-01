@@ -36,8 +36,6 @@ class LdapSync extends Model implements Authenticatable
      */
     protected $appends = ['login_name'];
 
-<<<<<<< HEAD
-=======
     /**
      * Determine admin role
      * @return Attribute
@@ -49,7 +47,6 @@ class LdapSync extends Model implements Authenticatable
             get: fn () => array_shift($array),
         );
     }
->>>>>>> 24dd5df (Initial commit)
 
     /**
      * The attributes that should be visible in arrays.
