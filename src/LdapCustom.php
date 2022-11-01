@@ -65,7 +65,7 @@ class LdapCustom
             if(self::connectionLdap($user_name, $password, $connection_name))
             {
                 return match ($data_type) {
-                    'json' => \App\Ldap\LdapSync::all()->where('company')->toJson(),
+                    'json' => LdapSync::all()->where('company')->toJson(),
                     default => LdapSync::all()->where('company')->toArray(),
                 };
             }else
@@ -172,8 +172,23 @@ class LdapCustom
         return '/storage/media/avatars/blank.png';
     }
 
-    public static function getLdapPersonal($user_name)
+    /**
+     * @param $user_name
+     * @param $password
+     * @param $connection_name
+     * @return int|mixed|void
+     */
+    public static function getLdapPersonal($user_name,$password, $connection_name = null)
     {
-        return LdapSync::all()->where('userprincipalname',[$user_name])->first();
+        try {
+            $connection = $connection_name ?: self::getConnectionName();
+            if(self::connectionLdap($user_name, $password, $connection)){
+                return LdapSync::all()->where('userprincipalname',[$user_name])->first();
+            }
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
     }
 }
