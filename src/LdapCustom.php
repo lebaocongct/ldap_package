@@ -191,4 +191,13 @@ class LdapCustom
             return 0;
         }
     }
+
+    /**
+     * @param $user_name
+     * @return string
+     */
+    public static function setUsernameLdap($user_name): string
+    {
+        return $user_name.'@plott.co.local';
+    }
 }
