@@ -198,6 +198,6 @@ class LdapCustom
      */
     public static function setUsernameLdap($user_name): string
     {
-        return $user_name.'@plott.co.local';
+        return $user_name.'@plott.local';
     }
 }
