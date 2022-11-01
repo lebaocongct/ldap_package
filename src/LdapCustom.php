@@ -34,6 +34,23 @@ class LdapCustom
     }
 
     /**
+     * @param $connection_name
+     * @return Connection|int
+     *
+     */
+    public static function getConnection($connection_name = null): Connection|int
+    {
+        $connection = $connection_name ?: self::getConnectionName();
+        try
+        {
+            return Container::getConnection($connection);
+        } catch (Exception)
+        {
+            return 0;
+        }
+    }
+
+    /**
      * @param $user_name
      * @param $password
      * @param null $connection_name
