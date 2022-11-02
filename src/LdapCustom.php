@@ -108,11 +108,11 @@ class LdapCustom
     /**
      * @param $user_name
      * @param $password
-     * @param $connection_name
-     * @return string
+     * @param null $connection_name
+     * @return bool|string Sync ldap to user
      * Sync ldap to user
      */
-    public static function sync($user_name, $password, $connection_name = null): string
+    public static function sync($user_name, $password, $connection_name = null, $is_update_all = true): bool|string
     {
         try
         {
@@ -122,13 +122,13 @@ class LdapCustom
             $info_ldap = self::getInfoLdap($user_name, $password, $connection_name);
             foreach ($info_ldap as $value)
             {
-                self::firstOrCreateUser($value, $ldap_id);
+                $is_update_all ? self::updateOrCreateUser($value,$ldap_id) : self::firstOrCreateUser($value, $ldap_id);
             }
-            return 'Successful';
+            return true;
         }
         catch (Exception)
         {
-            return 'Error';
+            return false;
         }
 
     }
@@ -136,6 +136,22 @@ class LdapCustom
     public static function firstOrCreateUser($user,$ldap_id)
     {
         return User::firstOrCreate(
+            ['user_name' =>  $user['userprincipalname'][0]],
+            [
+                'ldap_id' => $ldap_id,
+                'full_name' => $user['displayname'][0],
+                'user_name' => $user['userprincipalname'][0],
+                'ldap_name' => $user['samaccountname'][0],
+                'email' => $user['mail'][0],
+                'avatar' => '/storage/media/avatars/blank.png',
+                'phone' => fake()->phoneNumber(),
+            ]
+        );
+    }
+
+    public static function updateOrCreateUser($user,$ldap_id)
+    {
+        return User::updateOrCreate(
             ['user_name' =>  $user['userprincipalname'][0]],
             [
                 'ldap_id' => $ldap_id,
